@@ -24,6 +24,9 @@ public class App {
 
         System.out.println(set);
 
+        set.clear();
+        System.out.println(set);
+
     }
 
     public static void experimentWithArrayList(int size) {
