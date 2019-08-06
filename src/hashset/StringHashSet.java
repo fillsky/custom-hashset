@@ -3,6 +3,7 @@ package hashset;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StringHashSet implements Set<String> {
@@ -53,7 +54,15 @@ public class StringHashSet implements Set<String> {
 
     @Override
     public boolean add(String s) {
-        return false;
+        int hash = s.hashCode();
+        int index = hash % this.buckets.size();
+        for (String bucket : this.buckets.get(index)) {
+            if (bucket.hashCode() == hash) {
+                return false;
+            }
+        }
+        this.buckets.get(index).add(s);
+        return true;
     }
 
     @Override
@@ -104,5 +113,12 @@ public class StringHashSet implements Set<String> {
     @Override
     public Stream<String> parallelStream() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + this.buckets.stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.joining(", ")) + "}";
     }
 }

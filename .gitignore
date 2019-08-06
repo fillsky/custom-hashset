@@ -1,6 +1,6 @@
 /Unused
 /Unused/*
-
+/.idea/
 # Ustawienia uzytkownika:
 .idea/**/workspace.xml
 .idea/**/tasks.xml
