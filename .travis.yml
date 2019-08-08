@@ -1,5 +1,9 @@
 language: java
-script: "mvn cobertura:cobertura"
+jdk: oraclejdk8
+
+script:
+  - "mvn cobertura:cobertura"
+  - jdk_switcher use oraclejdk8
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -t f04bcbe6-c72d-4311-9475-0f01ddca0e1d
