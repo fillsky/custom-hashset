@@ -1,4 +1,4 @@
-import hashset.StringHashSet;
+import hashcollections.StringHashSet;
 
 import java.util.List;
 import java.util.Set;
@@ -22,6 +22,9 @@ public class App {
         set.add("Marek");
         set.add("Marek");
 
+        System.out.println(set);
+
+        set.clear();
         System.out.println(set);
 
     }
