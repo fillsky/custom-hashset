@@ -1,4 +1,4 @@
-import hashset.StringHashSet;
+import hashcollections.StringHashSet;
 
 import java.util.List;
 import java.util.Set;
