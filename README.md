@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/fillsky/semi-advanced-programming-SDA.svg?branch=master)](https://travis-ci.org/fillsky/semi-advanced-programming-SDA)
