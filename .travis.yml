@@ -4,6 +4,7 @@ dist: trusty
 script:
   - "mvn cobertura:cobertura"
   - jdk_switcher use oraclejdk8
+  - mvn test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t f04bcbe6-c72d-4311-9475-0f01ddca0e1d
