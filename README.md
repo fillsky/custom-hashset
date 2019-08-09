@@ -1,1 +1,2 @@
 [![Build Status](https://travis-ci.org/fillsky/semi-advanced-programming-SDA.svg?branch=master)](https://travis-ci.org/fillsky/semi-advanced-programming-SDA)
+[![codecov](https://codecov.io/gh/fillsky/semi-advanced-programming-SDA/branch/master/graph/badge.svg)](https://codecov.io/gh/fillsky/semi-advanced-programming-SDA)
