@@ -20,12 +20,12 @@ public class CustomHashMap <K, V> implements Map<K, V> {
 
     @Override
     public int size() {
-        return 0;
+        return storage.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return storage.isEmpty();
     }
 
     @Override
