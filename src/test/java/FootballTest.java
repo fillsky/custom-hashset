@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 
 public class FootballTest {
-    Team team1 = new Team("Ogórki");
-    Team team2 = new Team("Parówki");
+    Team team1 = new Team("Ogórki", 1);
+    Team team2 = new Team("Parówki", 2);
 
     HashSet<Team> teams = new HashSet<>();
 

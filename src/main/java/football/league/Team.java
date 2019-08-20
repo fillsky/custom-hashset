@@ -11,15 +11,26 @@ public class Team {
     private HashSet<String> players = new HashSet();
     private String name;
     private int points;
+    private final int id;
 
-    public Team(String name) {
+    public Team(String name, int id) {
         this.name = name;
+        this.id = id;
 
         players.add("Leluś Zielony");
         players.add("Leluś Czerwony");
         players.add("Leluś Błękitny");
         players.add("Leluś Czarny");
 
+        points = 0;
+    }
+
+
+
+    public Team(String name, int id, HashSet<String> players) {
+        this.name = name;
+        this.id = id;
+        this.players = players;
         points = 0;
     }
 
@@ -47,5 +58,13 @@ public class Team {
 
     public int getPoints() {
         return points;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public HashSet<String> getPlayers() {
+        return players;
     }
 }
