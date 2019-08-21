@@ -1,6 +1,7 @@
 package football.league;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Przechowuje listę zawodników. - unikalna bez powtórzeń;
@@ -8,7 +9,7 @@ import java.util.HashSet;
  */
 public class Team {
 
-    private HashSet<String> players = new HashSet();
+    private List<String> players = new ArrayList<>();
     private String name;
     private int points;
     private final int id;
@@ -27,7 +28,7 @@ public class Team {
 
 
 
-    public Team(String name, int id, HashSet<String> players) {
+    public Team(String name, int id, List<String> players) {
         this.name = name;
         this.id = id;
         this.players = players;
@@ -64,9 +65,10 @@ public class Team {
         return id;
     }
 
-    public HashSet<String> getPlayers() {
+    public List<String> getPlayers() {
         return players;
     }
+
 
 
 }

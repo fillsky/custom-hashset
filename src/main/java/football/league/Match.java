@@ -1,27 +1,36 @@
 package football.league;
 
+import lombok.ToString;
+
 /**
  * Reperezentuje konkretny, zakonczony pojedynek.
  * Ma gospodarze (host), gość (away) i wynik (1-3-0)
  */
-
+@ToString
 public class Match {
 
+    private int id;
     private Team host;
-
-
     private Team away;
     private int hostScore;
     private int awayScore;
 
-    public Match(Team host, Team away, League league) {
+    public Match(int id, Team host, Team away, League league) {
         this.host = host;
         this.away = away;
         hostScore = 0;
         awayScore = 0;
+        this.id = id;
         league.addMatch(this);
     }
 
+    public Match(int id, Team host, Team away, int hostScore, int awayScore) {
+        this.id = id;
+        this.host = host;
+        this.away = away;
+        this.hostScore = hostScore;
+        this.awayScore = awayScore;
+    }
 
     public void addPoint(Team team) {
         if (team == this.host) {
@@ -75,6 +84,18 @@ public class Match {
 
     public boolean hasTeam(Team team) {
         return host.equals(team) || away.equals(team);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getHostScore() {
+        return hostScore;
+    }
+
+    public int getAwayScore() {
+        return awayScore;
     }
 
     @Override

@@ -10,26 +10,64 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class FileManager {
 
 
-    public void saveGenericFile(Collection<?> collection, IWriterCSV iWriterCSV) throws IOException {
+
+    public <T> List<T> readGenericFile(String name, IReaderCSV<T> reader) throws IOException {
+
+        CSVParserBuilder parserBuilder = new CSVParserBuilder() // parser builder do parametrów
+                .withEscapeChar('\\')
+                .withIgnoreLeadingWhiteSpace(true)
+                .withQuoteChar('"')
+                .withSeparator(';');
+
+        CSVReaderBuilder readerBuilder = new CSVReaderBuilder(
+                new FileReader(name + ".csv"))
+                .withCSVParser(parserBuilder.build());
+
+        return readerBuilder.build().readAll()
+                .stream()
+                .map(reader::fromArray)
+                .collect(toList());
+
+    }
+
+    public void saveGenericFile(String name, Collection<?> collection, IWriterCSV iWriterCSV) throws IOException {
 
 
-        CSVWriter writer = new CSVWriter(new FileWriter("teams2.csv"),
+        CSVWriter writer = new CSVWriter(new FileWriter(name + ".csv"),
                 ';',
                 '"',
                 '\\',
                 "\n");
 
         writer.writeAll(collection.stream()
-        .map(iWriterCSV::toArrays)
-        .collect(Collectors.toList()));
+                .map(iWriterCSV::toArrays)
+                .collect(toList()));
 
         writer.close();
 
+    }
+
+    public List<Team> readTeamsFromFile() throws IOException {
+
+        CSVParserBuilder parserBuilder = new CSVParserBuilder() // parser builder do parametrów
+                .withEscapeChar('\\')
+                .withIgnoreLeadingWhiteSpace(true)
+                .withQuoteChar('"')
+                .withSeparator(';');
+
+        CSVReaderBuilder readerBuilder = new CSVReaderBuilder(
+                new FileReader("teams.csv"))
+                .withCSVParser(parserBuilder.build());
+
+        return readerBuilder.build().readAll().stream()
+                .map(this::arrayToTeam)
+                .collect(toList());
     }
 
     public void saveFile(List<Match> matches) throws IOException {
@@ -42,7 +80,7 @@ public class FileManager {
 
         writer.writeAll(matches.stream()
                 .map(this::matchToArray)
-                .collect(Collectors.toList()));
+                .collect(toList()));
 
         writer.close();
     }
@@ -59,7 +97,7 @@ public class FileManager {
                 .map(this::teamToArray)
                 .peek(team -> System.out.println(Arrays.toString(team)))
                 .peek(System.out::println)
-                .collect(Collectors.toList())
+                .collect(toList())
         );
 
         writer.close();
@@ -93,9 +131,13 @@ public class FileManager {
         };
     }
 
-    /*private String[] allToArray(IWriterCSV iWriterCSV){
-        iWriterCSV.toArrays()
-    }*/
+    private Team arrayToTeam(String[] row) {
+        int id = Integer.parseInt(row[0]);
+        String teamName = row[1];
+        List<String> players = Arrays.asList(row[2].split(","));
+        return new Team(teamName, id, players);
+
+    }
 
 
 }

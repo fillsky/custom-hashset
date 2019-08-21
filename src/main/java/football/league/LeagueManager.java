@@ -2,8 +2,9 @@ package football.league;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class LeagueManager {
 
@@ -19,35 +20,62 @@ public class LeagueManager {
 
         League league = new League("Ostatnia", teams);
 
-        Match match = new Match(team1, team2, league);
-        match.addPoint(team1);
-        match.addPoint(team1);
-        match.addPoint(team2);
-        match.addPoint(team2);
-        match.addPoint(team1);
+        Match match1 = new Match(1, team1, team2, league);
+        match1.addPoint(team1);
+        match1.addPoint(team1);
+        match1.addPoint(team2);
+        match1.addPoint(team2);
+        match1.addPoint(team2);
+        match1.addPoint(team1);
 
-        System.out.println(match.getScore());
+        System.out.println(match1.getScore());
 
-        match.matchFinished();
+        match1.matchFinished();
         league.showMatches();
         league.showTeams();
         league.showTeamMatches(team1);
 
-        Match match2 = new Match(team1, team2, league);
+        Match match2 = new Match(2,team1, team2, league);
+
+        match2.addPoint(team1);
+        match2.addPoint(team1);
+        match2.addPoint(team1);
+        match2.addPoint(team2);
+        match2.addPoint(team2);
+        match2.addPoint(team2);
+        match2.addPoint(team1);
+
+        List<League> leagues = new ArrayList<>();
+        leagues.add(league);
 
         FileManager file = new FileManager();
-        file.saveTeamsToFile(teams);
-        file.readCSV().stream().forEach(x -> System.out.println(Arrays.toString(x)));
+        /*file.saveTeamsToFile(teams);
+        file.readCSV().stream().forEach(x -> System.out.println(Arrays.toString(x)));*/
 
-        file.saveGenericFile(teams, t -> {
-            Team team = (Team) t;
-            return new String[]{
-                    String.valueOf(team.getId()),
-                    team.getName(),
-                    String.join(",", team.getPlayers())
-            };
-        });
+        file.saveGenericFile("teams_g", teams, FileUtils::writeTeam);
+        file.saveGenericFile("matches_g", league.getMatches(), FileUtils::writeMatch);
+        file.saveGenericFile("leagues_g", leagues, FileUtils::writeLeague);
 
+        List<Team> teams2;
+
+        teams2 = file.readGenericFile("teams_g", FileUtils::readTeam);
+
+
+        System.out.println(" ---- Team Po wczytaniu ---");
+        teams2.stream().forEach(System.out::println);
+
+
+        FileUtils.setTeamMap(teams2.stream()
+                .collect(Collectors.toMap(Team::getId, Function.identity())));
+
+        List<Match> restoredMatches = file.readGenericFile("matches_g", FileUtils::readMatches);
+
+
+        System.out.println("---- odzyskane mecze --- ");
+        restoredMatches.forEach(System.out::println);
+
+        FileUtils.setMatchMap(league.getMatches().stream()
+                .collect(Collectors.toMap(Match::getId, Function.identity())));
 
     }
 

@@ -27,7 +27,7 @@ public class League {
         System.out.println(matches);
     }
 
-    public void showTeamMatches(Team team) {
+    public List<Team> showTeamMatches(Team team) {
        /* if (teams.contains(team)){
             matches.stream().filter(match -> match.getHost() == team || match.getAway() == team).
             forEach(System.out::println);
@@ -53,12 +53,13 @@ public class League {
                     .mapToInt(match -> match.getScore(team))
                     .sum();
             scores.put(team, sum);
+        }
 
-            scores.entrySet().stream()
+          return scores.entrySet().stream()
                     .sorted(Comparator.comparing(Map.Entry<Team, Integer>::getValue).reversed())
                     .map(Map.Entry::getKey)
                     .collect(Collectors.toList());
-        }
+
     }
 
     public String getName() {
@@ -71,5 +72,9 @@ public class League {
 
     public Collection<Team> getTeams() {
         return teams;
+    }
+
+    public Collection<Match> getMatches() {
+        return matches;
     }
 }
