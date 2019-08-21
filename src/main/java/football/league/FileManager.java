@@ -14,8 +14,21 @@ import java.util.stream.Collectors;
 
 public class FileManager {
 
-    public void saveGenericFile(Collection<?> collection, String name) {
 
+    public void saveGenericFile(Collection<?> collection, IWriterCSV iWriterCSV) throws IOException {
+
+
+        CSVWriter writer = new CSVWriter(new FileWriter("teams2.csv"),
+                ';',
+                '"',
+                '\\',
+                "\n");
+
+        writer.writeAll(collection.stream()
+        .map(iWriterCSV::toArrays)
+        .collect(Collectors.toList()));
+
+        writer.close();
 
     }
 
@@ -79,5 +92,10 @@ public class FileManager {
                 String.join(",", team.getPlayers())
         };
     }
+
+    /*private String[] allToArray(IWriterCSV iWriterCSV){
+        iWriterCSV.toArrays()
+    }*/
+
 
 }

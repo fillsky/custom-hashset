@@ -1,5 +1,7 @@
 import football.league.League;
 import football.league.Team;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +28,13 @@ public class FootballTest {
 
         Assertions.assertFalse(league.getName().isEmpty());
         Assertions.assertFalse(league.getTeams().isEmpty());
+
+    }
+
+    @DisplayName("Test Equals")
+    @Test
+    public void equalsConract(){
+        EqualsVerifier.forClass(Team.class).suppress(Warning.INHERITED_DIRECTLY_FROM_OBJECT).verify();
 
     }
 }

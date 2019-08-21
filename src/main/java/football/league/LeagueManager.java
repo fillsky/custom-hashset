@@ -39,10 +39,17 @@ public class LeagueManager {
         file.saveTeamsToFile(teams);
         file.readCSV().stream().forEach(x -> System.out.println(Arrays.toString(x)));
 
+        file.saveGenericFile(teams, t -> {
+            Team team = (Team) t;
+            return new String[]{
+                    String.valueOf(team.getId()),
+                    team.getName(),
+                    String.join(",", team.getPlayers())
+            };
+        });
 
 
     }
-
 
 
 }

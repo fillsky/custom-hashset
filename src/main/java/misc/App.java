@@ -1,3 +1,5 @@
+package misc;
+
 import hashcollections.CustomHashMap;
 
 import java.util.Map;
