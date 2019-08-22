@@ -69,19 +69,19 @@ public class LeagueManager {
         file.readCSV().stream().forEach(x -> System.out.println(Arrays.toString(x)));*/
 
         file.saveGenericFile("teams_g", teams, FileUtils::writeTeam);
-        file.saveGenericFile("matches_g", league1.getMatches(), FileUtils::writeMatch);
+        file.saveGenericFile("matches_g", league1.getMatches(), FileUtils::writeMatch); // tu poprawić żeby wczytywało wstzstkie mecze z kazdej ligi.
         file.saveGenericFile("leagues_g", leagues, FileUtils::writeLeague);
 
-        List<Team> teams2;
+        List<Team> restoredTeams;
 
-        teams2 = file.readGenericFile("teams_g", FileUtils::readTeam);
+        restoredTeams = file.readGenericFile("teams_g", FileUtils::readTeam);
 
 
         System.out.println(" ---- Team Po wczytaniu ---");
-        teams2.forEach(System.out::println);
+        restoredTeams.forEach(System.out::println);
 
 
-        FileUtils.setTeamMap(teams2.stream()
+        FileUtils.setTeamMap(restoredTeams.stream()
                 .collect(toMap(Team::getId, Function.identity())));
 
         List<Match> restoredMatches = file.readGenericFile("matches_g", FileUtils::readMatches);

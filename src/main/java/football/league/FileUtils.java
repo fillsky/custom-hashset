@@ -21,7 +21,7 @@ public class FileUtils {
 
 
     public static Team readTeam(String [] row){
-        //String [] row = (String[]) t;
+
         int id = Integer.parseInt(row[0]);
         String teamName = row[2];
         List<String> players = Arrays.asList(row[3].split(","));
