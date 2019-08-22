@@ -1,5 +1,7 @@
 package football.league;
 
+import lombok.ToString;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -7,6 +9,7 @@ import java.util.stream.Collectors;
  * klasa prezentująca ligę. Przechowuje listę drużyn i listę meczów.
  * Umie zwrócić listę drużyn posortowaną po zdobytych punktach.
  */
+@ToString
 public class League {
 
     private String name;
@@ -18,6 +21,11 @@ public class League {
         this.teams = teams;
     }
 
+    public League(String name, Collection<Team> teams, Collection<Match> matches) {
+        this.name = name;
+        this.teams = teams;
+        this.matches = matches;
+    }
 
     public boolean addMatch(Match match) {
         return matches.add(match);

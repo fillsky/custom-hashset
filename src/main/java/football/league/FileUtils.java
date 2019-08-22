@@ -1,19 +1,24 @@
 package football.league;
 
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.collections.ArrayStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 @Log4j
+
 /* Using this class instead of writing lambdas in line*/
 public class FileUtils {
 
 
     private static Map<Integer, Team> teamMap;
     private static Map<Integer, Match> matchMap;
+
 
     public static Team readTeam(String [] row){
         //String [] row = (String[]) t;
@@ -40,6 +45,7 @@ public class FileUtils {
         if (host == null) {
             log.error(String.format("Host with id %d not found.", hostId));
             throw new RuntimeException("Host not found");
+
         } if (away == null) {
             log.error(String.format("Away with id %d not found.", awayId));
             throw new RuntimeException("Away not found");
@@ -49,10 +55,29 @@ public class FileUtils {
 
     }
 
-    /*public static League readLeague (String[] row){
+    public static League readLeague (String[] row){
 
+        List<Integer> teamIds = Arrays.stream(row[0].split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        List<Integer> matchIds = Arrays.stream(row[1].split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        String name = row[2];
+        List<Team> teams = new ArrayList<>();
+        List<Match> matches = new ArrayList<>();
 
-    }*/
+        teamIds.forEach(t -> {
+            Team team = teamMap.get(t);
+            teams.add(team);
+        });
+        matchIds.forEach(m -> {
+            Match match = matchMap.get(m);
+            matches.add(match);
+        });
+
+        return new League(name, teams, matches);
+    }
     public static String[] writeLeague(Object object){
 
         League league = (League) object;
